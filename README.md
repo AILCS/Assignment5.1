@@ -1,13 +1,13 @@
 # Exploratory Data Analysis on Coupon Acceptance Rates
 
 **Assignment Notebook:** https://github.com/AILCS/Assignment5.1/blob/main/prompt_working%20(final).ipynb 
-
+  
 ## Overview
 The code uses Exploratory Data Analysis (EDA) to assess how data from the [coupons.csv](https://github.com/AILCS/Assignment5.1/blob/main/data/coupons.csv) can be used to answer the question “Will a customer accept the coupon?”. 
-
+  
 ## Problem Statement
 Explore the data using plots, statistical summaries, and visualisation using Python to distinguish drivers who accepted the coupon and those who did not. THen recommend the data columns that can be used to predict whether a driver will accept the coupon.
-
+  
 ## Data Description
 The data comes from the UCI Machine Learning repository and was collected via a survey on Amazon Mechanical Turk. The survey describes different driving scenarios including the destination, current time, weather, passenger, etc., and then asks the person whether he will accept the coupon if he is the driver. Answers that the user will drive there ‘right away’ or ‘later before the coupon expires’ are labeled as ‘Y = 1’ and answers ‘no, I do not want the coupon’ are labeled as ‘Y = 0’. There are five different types of coupons -- less expensive restaurants (under $20), coffee houses, carry out & take away, bar, and more expensive restaurants ($20 - $50).
 
@@ -60,6 +60,7 @@ The following assumpions were applied to derive a clean dataset:
 
 
 ## Key Findings
+### Findings across all coupons
 The coupon acceptance rate was analysed against a few columns . Below are the key findings:
 1. Coupons are highly likely to be accepted for carry outs/take aways and cheap restaurants (74% and 71% respectively).
    <img width="726" height="751" alt="stacked bar - coupon type" src="https://github.com/user-attachments/assets/e9fa6c03-ac59-4c38-9d7a-819978a1d1e8" />
@@ -83,7 +84,46 @@ The coupon acceptance rate was analysed against a few columns . Below are the ke
 12. No material relationship between income and coupon acceptance.
     <img width="725" height="691" alt="stacked bar - income" src="https://github.com/user-attachments/assets/728e5289-5ebe-4832-948c-b4893fb4df4a" />
 
-A deeper dive was performed specifically for Bar coupons and Coffee House coupons to scope the assessment. Below are the key findings:
+13. There are more datapoints on the coupons at higher temperatures rather than at low temperatures, as evident from the histogram below.
+    <img width="640" height="480" alt="hist - temperature" src="https://github.com/user-attachments/assets/bbdfd089-4211-4dda-bcc6-7e0f24b2f0c4" />
 
 
+### Investigating Bar Coupons and Coffee House Coupons
+
+A deeper dive was performed specifically for Bar coupons and Coffee House coupons. Below are the key findings:
+1. **What proportion of bar/coffee house coupons were accepted?**  
+   Bar: 41%  
+   Coffee House: 50%  
+
+3. **Compare the acceptance rate between those who went to a bar/coffee house 3 or fewer times a month to those who went more.**  
+     
+   **Visit Frequency:** Drivers who visit the Bar/Coffee House 3 or more times per month are more likely to accept the respective coupons than those who visit the venue less. This is more evident for Bar coupons    (76%) than for Coffee House coupons.
+   <img width="640" height="480" alt="bar - bch category 3" src="https://github.com/user-attachments/assets/e25b7a57-ac73-4e3f-94ff-b5c5c1c10fc8" />
+  
+4. **Compare the acceptance rate between drivers who go to a bar/coffee house once or more a month and are over the age of 25 to the all others. Is there a difference?**  
+  
+   **Visit Frequency + Age:** Drivers aged >25 and who visit the Bar/Coffee House once or more per month are more likely to accept the respective coupons. This is more evident for Bar coupons (69%) than for         Coffee House coupons.
+   <img width="640" height="480" alt="bar - bch category 4" src="https://github.com/user-attachments/assets/15a0399f-5fe0-41bc-aedd-20783d55c845" />
+  
+5. **Compare the acceptance rate between drivers who go to bars/coffee houses more than once a month and had passengers that were not a kid and had occupations other than farming, fishing, or forestry.**  
+  
+   **Visit Frequency + Passenger Type + Occupation:** Drivers who met the condition are more likely to accept the respective coupons. This is more evident for Coffee House coupons than for Bar coupons (71%).
+   <img width="640" height="480" alt="bar - bch category 5" src="https://github.com/user-attachments/assets/652b009d-12af-4c6e-ae5a-8b0ed3351113" />
+  
+6. **Compare the acceptance rates between those drivers who:**  
+   **- go to bars/coffee houses more than once a month, had passengers that were not a kid, and were not widowed OR**  
+   **- go to bars/coffee houses more than once a month and are under the age of 30 OR**  
+   **- go to cheap restaurants more than 4 times a month and income is less than 50K.**
+   **Based on these observations, what do you hypothesize about drivers who accepted the bar coupons?**
+     
+   **Visit Frequency + Passenger Type + Marital Status / Visit Frequency + Age / Cheap Restaurant Visit Frequency + Income:** Drivers who met the condition are more likely to accept the respective coupons. This     is more evident for Coffee House coupons (64%) than for Bar coupons (57%).
+     
+   Given the higher Bar/Coffee House coupon acceptance rates for drivers who met the conditions, my hypothesis is that young drivers who probably just started working, have limited liabilities, and enjoy going      to bars/coffee houses are more likely to accept the coupons.
+   
 ## Recommendations and Next Steps
+Based on the EDA done on selected columns of the dataset, we can conclude that Bar/Coffee House visit frequencies, together with the columns describing the profile of the driver (e.g age, income, marital status, occupation, passenger type) are useful indicators of whether the driver is likely to accept the Bar/Coffee House coupon. 
+  
+These columns can be used as inputs to the Bar/Coffee House coupon acceptance prediction model.  
+  
+Further EDA can be performed on other columns to extend the set of useful inputs for the model.
+
